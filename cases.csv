@@ -1,0 +1,13 @@
+case_id,title,symptom,show_output,expected_gateway,ai_fallback
+Case #12,Guest Wi-Fi,Clients connecting to Guest Wi-Fi SSID are not receiving IP addresses. They get a 169.254.x.x autoconfigured address.,"interface GigabitEthernet0/1
+ shutdown
+ description Guest Wi-Fi VLAN 100
+ ip address 192.168.100.1 255.255.255.0",192.168.100.1,"{""root_cause"": ""Interface GigabitEthernet0/1 is administratively down (shutdown)."", ""osi_layer"": ""Layer 1"", ""confidence"": ""low"", ""evidence"": ""shutdown"", ""next_command"": ""show ip interface brief"", ""fix_steps"": [""interface GigabitEthernet0/1"", ""no shutdown""]}"
+Case #15,WAN Link Host Mask,Cannot ping next-hop ISP gateway on WAN link.,"interface GigabitEthernet0/0
+ description WAN Connection to ISP
+ ip address 203.0.113.5 255.255.255.255",203.0.113.1,"{""root_cause"": ""A /32 host mask is misconfigured on GigabitEthernet0/0, preventing local subnet routing."", ""osi_layer"": ""Layer 3"", ""confidence"": ""high"", ""evidence"": ""255.255.255.255"", ""next_command"": ""show ip route"", ""fix_steps"": [""interface GigabitEthernet0/0"", ""ip address 203.0.113.5 255.255.255.252""]}"
+Case #3,Core Switch Trunking,Traffic from VLAN 10 is not traversing from Core to Distribution switch.,"interface GigabitEthernet1/0/1
+ description Trunk to DistSwitch
+ switchport trunk encapsulation dot1q
+ switchport trunk allowed vlan 1,2,5,20
+ switchport mode trunk",None,"{""root_cause"": ""VLAN 10 is missing from the switchport trunk allowed list."", ""osi_layer"": ""Layer 2"", ""confidence"": ""high"", ""evidence"": ""switchport trunk allowed vlan 1,2,5,20"", ""next_command"": ""show interfaces trunk"", ""fix_steps"": [""interface GigabitEthernet1/0/1"", ""switchport trunk allowed vlan add 10""]}"
